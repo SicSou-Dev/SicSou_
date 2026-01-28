@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #16171a 0%, #232326 100%);
+            color: #b1b5bb;
+            text-align: center;
+            font-size: large;
+            font-style: italic;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        h1, h3 {
+            color: #7a7a7a;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 12px #000c;
+        }
+        p {
+            color: #888b90;
+            margin: 0.5em 0;
+        }
+        .container {
+            background: rgba(18, 18, 22, 0.96);
+            border-radius: 18px;
+            box-shadow: 0 6px 40px #000b;
+            padding: 2em 3em;
+            margin-top: 2em;
+            max-width: 400px;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+            animation: fadeInUp 1.2s cubic-bezier(.77,0,.18,1) forwards;
+        }
+        .profile-img {
+            display: block;
+            margin: 0 auto 1.5em auto;
+            width: 110px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 24px #000a;
+            border: 3px solid #232326;
+            background: #232326;
+            filter: grayscale(0.7) brightness(0.7) contrast(0.9);
+            transition: filter 0.3s;
+        }
+        .profile-img:hover {
+            filter: grayscale(0.3) brightness(0.9) contrast(1.1);
+        }
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        button {
+            background: #18191c;
+            color: #b1b5bb;
+            border: none;
+            border-radius: 8px;
+            padding: 0.7em 1.5em;
+            margin-top: 1.5em;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 2px 12px #0007;
+            transition: background 0.2s, transform 0.2s;
+        }
+        button:hover {
+            background: #232326;
+            transform: scale(1.04);
+        }
+        audio {
+            margin-top: 1em;
+            width: 100%;
+            outline: none;
+            filter: grayscale(1) brightness(0.5) contrast(0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="pdp.jpeg" alt="Photo de profil" class="profile-img">
+        <h1>Portfolio</h1>
+        <h3>Présentation</h3>
+        <p>Prénom: Maxence</p>
+        <p>Origine: Italien et Français</p>
+        <p>Passion: la technologie en général</p>
+        <p>Expérience: dev depuis un peu plus d'1 ans</p>
+
+        <h3>Détails</h3>
+        <p>Beaucoup m'appelle SicSou ou SouSic pour les intimes <br> j'ai fais cette page il y a cassis 1 ans quand j'écris ça pour m'entrainer mais elle m'a jamais servi et quand j'y repense elle était pas si mal et il me faut bien mon petit portfolio de développeur non ?</p>
+
+        <button id="play-music">Lancer la musique</button>
+        <audio id="audio" src="OrelSan - L'odeur de l'essence [CLIP OFFICIEL] 1.mp3"></audio>
+    </div>
+    <script>
+        const audio = document.getElementById('audio');
+        const playBtn = document.getElementById('play-music');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTime = localStorage.getItem('audioTime');
+            if (savedTime) {
+                audio.currentTime = parseFloat(savedTime);
+            }
+            if (localStorage.getItem('audioPlaying') === 'true') {
+                audio.play();
+            }
+        });
+
+        audio.addEventListener('timeupdate', () => {
+            localStorage.setItem('audioTime', audio.currentTime);
+        });
+
+        playBtn.addEventListener('click', function() {
+            audio.play();
+            localStorage.setItem('audioPlaying', true);
+        });
+
+        window.addEventListener('beforeunload', () => {
+            localStorage.setItem('audioPlaying', !audio.paused);
+        });
+    </script>
+</body>
+</html>
